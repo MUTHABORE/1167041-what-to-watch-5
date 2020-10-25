@@ -1,9 +1,13 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import {propsForFilms, propsForRouterProps} from '../../util/props-validation.js';
 
-const Player = () => {
+const Player = (props) => {
+  const films = props.films;
+  const filmId = props.routerProps.match.params.id;
   return (
     <div className="player">
-      <video src="#" className="player__video" poster="img/player-poster.jpg"></video>
+      <video src={films[filmId].video} className="player__video" poster="img/player-poster.jpg"></video>
 
       <button type="button" className="player__exit">Exit</button>
 
@@ -35,6 +39,11 @@ const Player = () => {
       </div>
     </div>
   );
+};
+
+Player.propTypes = {
+  films: PropTypes.arrayOf(propsForFilms),
+  routerProps: propsForRouterProps
 };
 
 export default Player;

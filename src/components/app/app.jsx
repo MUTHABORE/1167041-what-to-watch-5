@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Switch, Route, BrowserRouter} from 'react-router-dom';
+import {propsForFilms} from '../../util/props-validation.js';
 
 import Main from '../main/main.jsx';
 import SignIn from '../sign-in/sign-in.jsx';
@@ -9,27 +10,36 @@ import Film from '../film/film.jsx';
 import AddReview from '../add-review/add-review.jsx';
 import Player from '../player/player.jsx';
 
-const App = ({film}) => {
+const App = (props) => {
+  const films = props.films;
   return (
     <BrowserRouter>
       <Switch>
-        <Route path="/" exact>
-          <Main film={film}/>
+        <Route exact path="/">
+          <Main films={films}/>
         </Route>
-        <Route path="/login" exact>
+        <Route exact path="/login">
           <SignIn />
         </Route>
-        <Route path="/mylist" exact>
-          <MyList />
+        <Route exact path="/mylist">
+          <MyList films={films}/>
         </Route>
-        <Route path="/films/:id" exact>
-          <Film />
+        <Route exact path="/films/:id"
+          render={(routerProps) => (
+            <Film films={films} routerProps={routerProps}/>
+          )}
+        >
         </Route>
-        <Route path="/films/:id/review" exact>
-          <AddReview />
+        <Route exact path="/films/:id/review"
+          render={(routerProps) => (
+            <AddReview films={films} routerProps={routerProps}/>
+          )}
+        >
         </Route>
-        <Route path="/player/:id" exact>
-          <Player />
+        <Route exact path="/player/:id"
+          render={(routerProps) => (
+            <Player films={films} routerProps={routerProps}/>
+          )}>
         </Route>
       </Switch>
     </BrowserRouter>
@@ -37,7 +47,7 @@ const App = ({film}) => {
 };
 
 App.propTypes = {
-  film: PropTypes.object.isRequired
+  films: PropTypes.arrayOf(propsForFilms).isRequired
 };
 
 export default App;
