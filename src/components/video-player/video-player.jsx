@@ -13,18 +13,27 @@ class VideoPlayer extends PureComponent {
     this.videoRef = React.createRef();
   }
 
+  componentWillUnmount() {
+    this.playerStatus = false;
+    clearTimeout(this._setCardVideo);
+  }
+
   componentDidUpdate() {
     this.playerStatus = this.props.playerStatus;
 
+    this._setCardVideo();
+
+    if (!this.playerStatus) {
+      this.videoRef.current.load();
+    }
+  }
+
+  _setCardVideo() {
     setTimeout(() => {
       if (this.playerStatus) {
         this.videoRef.current.play();
       }
     }, HOVER_TIMEOUT);
-
-    if (!this.playerStatus) {
-      this.videoRef.current.load();
-    }
   }
 
   render() {

@@ -37,12 +37,14 @@ class MovieCard extends PureComponent {
       <article className="small-movie-card catalog__movies-card"
         onMouseEnter={this._mouseEnterHandler}
         onMouseLeave={this._mouseLeaveHandler}>
-        <div className="small-movie-card__image">
-          <VideoPlayer film={this._film} playerStatus={playerStatus} />
-        </div>
-        <h3 className="small-movie-card__title">
-          <Link className="small-movie-card__link" to={`/films/${this._film.id}`}>{this._film.title}</Link>
-        </h3>
+        <Link className="small-movie-card__link" to={`/films/${this._film.id}`}>
+          <div className="small-movie-card__image">
+            <VideoPlayer film={this._film} playerStatus={playerStatus} />
+          </div>
+          <h3 className="small-movie-card__title">
+            <span>{this._film.title}</span>
+          </h3>
+        </Link>
       </article>
     );
   }
