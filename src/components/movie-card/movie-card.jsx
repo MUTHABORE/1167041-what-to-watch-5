@@ -1,25 +1,54 @@
-import React from 'react';
+import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import {propsForFilms} from '../../util/props-validation';
 
-const MovieCard = (props) => {
-  const {id, image, title} = props.film;
-  const cardHoverHandler = props.cardHoverHandler;
-  const cardLeaveHoverHandler = props.cardLeaveHoverHandler;
-  return (
-    <article className="small-movie-card catalog__movies-card"
-      onMouseEnter={() => cardHoverHandler(props.film)}
-      onMouseLeave={cardLeaveHoverHandler}>
-      <div className="small-movie-card__image">
-        <img src={`img/images/${image}`} alt={`${title}`} width="280" height="175" />
-      </div>
-      <h3 className="small-movie-card__title">
-        <Link className="small-movie-card__link" to={`/films/${id}`}>{title}</Link>
-      </h3>
-    </article>
-  );
-};
+import VideoPlayer from '../video-player/video-player.jsx';
+class MovieCard extends PureComponent {
+  constructor(props) {
+    super(props);
+
+    this._film = props.film;
+
+    this.state = {
+      playerStatus: false
+    };
+
+    this.cardHoverHandler = props.cardHoverHandler;
+    this.cardLeaveHoverHandler = props.cardLeaveHoverHandler;
+
+    this._mouseEnterHandler = this._mouseEnterHandler.bind(this);
+    this._mouseLeaveHandler = this._mouseLeaveHandler.bind(this);
+  }
+
+  _mouseEnterHandler() {
+    this.cardHoverHandler(this.film);
+    this.setState({playerStatus: true});
+  }
+
+  _mouseLeaveHandler() {
+    this.cardLeaveHoverHandler();
+    this.setState({playerStatus: false});
+  }
+
+  render() {
+    const playerStatus = this.state.playerStatus;
+    return (
+      <article className="small-movie-card catalog__movies-card"
+        onMouseEnter={this._mouseEnterHandler}
+        onMouseLeave={this._mouseLeaveHandler}>
+        <Link className="small-movie-card__link" to={`/films/${this._film.id}`}>
+          <div className="small-movie-card__image">
+            <VideoPlayer film={this._film} playerStatus={playerStatus} />
+          </div>
+          <h3 className="small-movie-card__title">
+            <span>{this._film.title}</span>
+          </h3>
+        </Link>
+      </article>
+    );
+  }
+}
 
 MovieCard.propTypes = {
   film: propsForFilms,
