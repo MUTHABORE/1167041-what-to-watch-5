@@ -5,10 +5,10 @@ export const getRandomInteger = (a = 0, b = 1) => {
   return Math.floor(lower + Math.random() * (upper - lower + 1));
 };
 
-export const getRandomSet = (arr, min = 0) => {
+export const getRandomSet = (arr, min = 0, max = arr.length) => {
   const newSet = [];
 
-  for (let i = 0; i < getRandomInteger(min, arr.length); i++) {
+  for (let i = 0; i < getRandomInteger(min, max); i++) {
     newSet[i] = arr[getRandomInteger(0, arr.length - 1)];
   }
 

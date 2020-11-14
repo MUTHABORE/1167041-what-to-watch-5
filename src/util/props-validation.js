@@ -6,7 +6,7 @@ export const propsForFilms = PropTypes.shape({
   image: PropTypes.string.isRequired,
   poster: PropTypes.string.isRequired,
   background: PropTypes.string.isRequired,
-  genre: PropTypes.array.isRequired,
+  genre: PropTypes.string.isRequired,
   description: PropTypes.array.isRequired,
   rating: PropTypes.string.isRequired,
   amountVotes: PropTypes.number.isRequired,

@@ -1,59 +1,34 @@
-import React, {PureComponent} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import {propsForFilms} from '../../util/props-validation';
 
 import VideoPlayer from '../video-player/video-player.jsx';
-class MovieCard extends PureComponent {
-  constructor(props) {
-    super(props);
+import {withMovieCard} from '../../hocs/with-movie-card/with-movie-card.jsx';
 
-    this._film = props.film;
-
-    this.state = {
-      playerStatus: false
-    };
-
-    this.cardHoverHandler = props.cardHoverHandler;
-    this.cardLeaveHoverHandler = props.cardLeaveHoverHandler;
-
-    this._mouseEnterHandler = this._mouseEnterHandler.bind(this);
-    this._mouseLeaveHandler = this._mouseLeaveHandler.bind(this);
-  }
-
-  _mouseEnterHandler() {
-    this.cardHoverHandler(this.film);
-    this.setState({playerStatus: true});
-  }
-
-  _mouseLeaveHandler() {
-    this.cardLeaveHoverHandler();
-    this.setState({playerStatus: false});
-  }
-
-  render() {
-    const playerStatus = this.state.playerStatus;
-    return (
-      <article className="small-movie-card catalog__movies-card"
-        onMouseEnter={this._mouseEnterHandler}
-        onMouseLeave={this._mouseLeaveHandler}>
-        <Link className="small-movie-card__link" to={`/films/${this._film.id}`}>
-          <div className="small-movie-card__image">
-            <VideoPlayer film={this._film} playerStatus={playerStatus} />
-          </div>
-          <h3 className="small-movie-card__title">
-            <span>{this._film.title}</span>
-          </h3>
-        </Link>
-      </article>
-    );
-  }
-}
-
-MovieCard.propTypes = {
-  film: propsForFilms,
-  cardHoverHandler: PropTypes.func.isRequired,
-  cardLeaveHoverHandler: PropTypes.func.isRequired
+const MovieCard = (props) => {
+  const {movie, playerStatus, mouseEnterHandler, mouseLeaveHandler} = props;
+  return (
+    <article className="small-movie-card catalog__movies-card"
+      onMouseEnter={mouseEnterHandler}
+      onMouseLeave={mouseLeaveHandler}>
+      <Link className="small-movie-card__link" to={`/films/${movie.id}`}>
+        <div className="small-movie-card__image">
+          <VideoPlayer movie={movie} playerStatus={playerStatus} />
+        </div>
+        <h3 className="small-movie-card__title">
+          <span>{movie.title}</span>
+        </h3>
+      </Link>
+    </article>
+  );
 };
 
-export default MovieCard;
+MovieCard.propTypes = {
+  movie: propsForFilms,
+  playerStatus: PropTypes.boolean.isRequired,
+  mouseEnterHandler: PropTypes.func.isRequired,
+  mouseLeaveHandler: PropTypes.func.isRequired
+};
+
+export default withMovieCard(MovieCard);

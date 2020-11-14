@@ -1,21 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 
-import {getRatingFrase} from '../../util/film.js';
+import MovieTabs from '../movie-tabs/movie-tabs.jsx';
 import {propsForFilms, propsForRouterProps} from '../../util/props-validation.js';
 import MoviesList from '../movies-list/movies-list.jsx';
+import {AMOUNT_SIMILAR_MOVIES_TO_RENDER} from '../../util/const.js';
 
 const Film = (props) => {
-  const films = props.films;
-  const filmId = props.routerProps.match.params.id;
-  const {title, genre, releaseDate, poster, background, rating, amountVotes, description, director, actors} = films[filmId];
+  const movies = props.moviesList;
+  const movieId = props.routerProps.match.params.id;
+  const currentMovie = movies.find((elem) => elem.id === movieId);
+  const {title, genre, releaseDate, poster, background, id} = currentMovie;
+
+  const similarMovies = movies.filter((elem) => (elem.genre === genre) && (elem.id !== id));
+  const similarMoviesToRender = similarMovies.slice(0, AMOUNT_SIMILAR_MOVIES_TO_RENDER);
+
   return (
     <React.Fragment>
       <section className="movie-card movie-card--full">
         <div className="movie-card__hero">
           <div className="movie-card__bg">
-            <img src={`img/background/${background}`} alt={`${title}`} />
+            <img src={`img/background/${background}`} alt={title} />
           </div>
 
           <h1 className="visually-hidden">WTW</h1>
@@ -40,7 +47,7 @@ const Film = (props) => {
             <div className="movie-card__desc">
               <h2 className="movie-card__title">{title}</h2>
               <p className="movie-card__meta">
-                <span className="movie-card__genre">{genre.join(` `)}</span>
+                <span className="movie-card__genre">{genre}</span>
                 <span className="movie-card__year">{releaseDate}</span>
               </p>
 
@@ -57,7 +64,7 @@ const Film = (props) => {
                   </svg>
                   <span>My list</span>
                 </button>
-                <Link to={`/films/${filmId}/review`} className="btn movie-card__button">Add review</Link>
+                <Link to={`/films/${movieId}/review`} className="btn movie-card__button">Add review</Link>
               </div>
             </div>
           </div>
@@ -69,49 +76,18 @@ const Film = (props) => {
               <img src={`img/posters/${poster}`} alt={`${title}`} width="218" height="327" />
             </div>
 
-            <div className="movie-card__desc">
-              <nav className="movie-nav movie-card__nav">
-                <ul className="movie-nav__list">
-                  <li className="movie-nav__item movie-nav__item--active">
-                    <Link to={`/films/${filmId}`} className="movie-nav__link">Overview</Link>
-                  </li>
-                  <li className="movie-nav__item">
-                    <Link to="#" className="movie-nav__link">Details</Link>
-                  </li>
-                  <li className="movie-nav__item">
-                    <Link to="#" className="movie-nav__link">Reviews</Link>
-                  </li>
-                </ul>
-              </nav>
+            <MovieTabs movie={currentMovie}/>
 
-              <div className="movie-rating">
-                <div className="movie-rating__score">{rating}</div>
-                <p className="movie-rating__meta">
-                  <span className="movie-rating__level">{getRatingFrase(rating)}</span>
-                  <span className="movie-rating__count">{`${amountVotes} ratings`}</span>
-                </p>
-              </div>
-
-              <div className="movie-card__text">
-                <p>{description.join(`. `)}.</p>
-
-                <p className="movie-card__director"><strong>Director: {director}</strong></p>
-
-                <p className="movie-card__starring"><strong>Starring: {actors.join(`, `)}</strong></p>
-              </div>
-            </div>
           </div>
         </div>
       </section>
 
       <div className="page-content">
-        <section className="catalog catalog--like-this">
+        {similarMoviesToRender.length === 0 ? `` : <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
 
-          <div className="catalog__movies-list">
-            <MoviesList films={films}/>
-          </div>
-        </section>
+          <MoviesList moviesList={similarMoviesToRender}/>
+        </section>}
 
         <footer className="page-footer">
           <div className="logo">
@@ -132,8 +108,12 @@ const Film = (props) => {
 };
 
 Film.propTypes = {
-  films: PropTypes.arrayOf(propsForFilms),
+  moviesList: PropTypes.arrayOf(propsForFilms),
   routerProps: propsForRouterProps
 };
 
-export default Film;
+const mapStateToProps = (state) => ({
+  moviesList: state.moviesList,
+});
+
+export default connect(mapStateToProps)(Film);
