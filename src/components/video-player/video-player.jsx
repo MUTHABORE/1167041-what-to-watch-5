@@ -7,7 +7,7 @@ class VideoPlayer extends PureComponent {
   constructor(props) {
     super(props);
 
-    this._film = props.film;
+    this._movie = props.movie;
     this.playerStatus = props.playerStatus;
 
     this.videoRef = React.createRef();
@@ -39,19 +39,19 @@ class VideoPlayer extends PureComponent {
   render() {
     return <video
       ref={this.videoRef}
-      src={this._film.video}
-      poster={`img/images/${this._film.image}`}
+      src={this._movie.video}
+      poster={`img/images/${this._movie.image}`}
       width={CARD_SIZE.width}
       height={CARD_SIZE.height}
       preload="true"
       loop
       muted
-    >{this._film.title}</video>;
+    />;
   }
 }
 
 VideoPlayer.propTypes = {
-  film: propsForFilms,
+  movie: propsForFilms,
   playerStatus: PropTypes.bool.isRequired,
 };
 

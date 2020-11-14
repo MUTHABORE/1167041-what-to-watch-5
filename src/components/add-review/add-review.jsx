@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 
 import {propsForFilms, propsForRouterProps} from '../../util/props-validation.js';
@@ -7,9 +8,10 @@ import {propsForFilms, propsForRouterProps} from '../../util/props-validation.js
 import FormReview from '../form-review/form-review.jsx';
 
 const AddReview = (props) => {
-  const films = props.films;
-  const filmId = props.routerProps.match.params.id;
-  const {title, poster, background} = films[filmId];
+  const movies = props.moviesList;
+  const movieId = props.routerProps.match.params.id;
+  const currentMovie = movies.find((elem) => elem.id === movieId);
+  const {title, poster, background} = currentMovie;
   return (
     <section className="movie-card movie-card--full">
       <div className="movie-card__header">
@@ -31,7 +33,7 @@ const AddReview = (props) => {
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
-                <Link to={`/films/${filmId}`} className="breadcrumbs__link">{title}</Link>
+                <Link to={`/films/${movieId}`} className="breadcrumbs__link">{title}</Link>
               </li>
               <li className="breadcrumbs__item">
                 <a className="breadcrumbs__link">Add review</a>
@@ -52,7 +54,7 @@ const AddReview = (props) => {
       </div>
 
       <div className="add-review">
-        <FormReview/>
+        <FormReview />
       </div>
 
     </section>
@@ -60,8 +62,12 @@ const AddReview = (props) => {
 };
 
 AddReview.propTypes = {
-  films: PropTypes.arrayOf(propsForFilms).isRequired,
+  moviesList: PropTypes.arrayOf(propsForFilms).isRequired,
   routerProps: propsForRouterProps
 };
 
-export default AddReview;
+const mapStateToProps = (state) => ({
+  moviesList: state.moviesList,
+});
+
+export default connect(mapStateToProps)(AddReview);

@@ -27,12 +27,12 @@ const MONTHS = [`January`, `February`, `March`, `April`, `May`, `June`, `July`, 
 export const generateReviews = () => {
   const reviews = [];
 
-  for (let i = 0; i < getRandomInteger(0, REVIEWS_AMOUNT); i++) {
+  for (let i = 0; i < getRandomInteger(1, REVIEWS_AMOUNT); i++) {
     reviews[i] = {
       userName: USER_NAMES[getRandomInteger(0, USER_NAMES.length - 1)],
       rating: getRandomNumber(MAX_RATING, 1),
-      text: getRandomSet(SOME_SENTENCES).toString(),
-      date: getRandomInteger(0, MONTHS - 1) + ` ` + getRandomInteger(0, MAX_DAYS_IN_MONTH) + `, ` + getRandomInteger(MIN_REVIEW_YEAR, MAX_REVIEW_YEAR)
+      text: getRandomSet(SOME_SENTENCES, 2, 4).toString(),
+      date: MONTHS[getRandomInteger(0, MONTHS.length - 1)] + ` ` + getRandomInteger(0, MAX_DAYS_IN_MONTH) + `, ` + getRandomInteger(MIN_REVIEW_YEAR, MAX_REVIEW_YEAR)
     };
   }
   return reviews;

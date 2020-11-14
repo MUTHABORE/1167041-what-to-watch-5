@@ -105,7 +105,7 @@ const generateFilmsDatabase = () => {
       image: IMAGES_NAMES[getRandomInteger(0, IMAGES_NAMES.length - 1)],
       poster: POSTERS_NAMES[getRandomInteger(0, POSTERS_NAMES.length - 1)],
       background: BACKGROUNDS[getRandomInteger(0, BACKGROUNDS.length - 1)],
-      genre: getRandomSet(GENRES, 1),
+      genre: GENRES[getRandomInteger(0, GENRES.length - 1)],
       description: getRandomSet(DESCRIPTION, 1),
       rating: getRandomNumber(MAX_RATING),
       amountVotes: getRandomInteger(0, 999),
