@@ -3,7 +3,7 @@ import {generateReviews} from './reviews.js';
 
 const MIN_RELEASE_YEAR = 1990;
 const MAX_RELEASE_YEAR = 2020;
-const MAX_FILMS_AMOUNT = 8;
+const MAX_FILMS_AMOUNT = 17;
 const MAX_RATING = 10;
 const MAX_DURATION = 250;
 

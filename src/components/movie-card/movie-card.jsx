@@ -26,7 +26,7 @@ const MovieCard = (props) => {
 
 MovieCard.propTypes = {
   movie: propsForFilms,
-  playerStatus: PropTypes.boolean.isRequired,
+  playerStatus: PropTypes.bool.isRequired,
   mouseEnterHandler: PropTypes.func.isRequired,
   mouseLeaveHandler: PropTypes.func.isRequired
 };
