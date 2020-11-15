@@ -1,12 +1,14 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
+import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
 import {propsForFilms} from '../../util/props-validation.js';
 
+import {ActionCreator} from '../../store/action.js';
 import MoviesList from '../movies-list/movies-list.jsx';
 
 const MyList = (props) => {
-  const films = props.films;
+  const {moviesList, amountMoviesToRender, changeAmountMoviesToRender} = props;
   return (
     <div className="user-page">
       <header className="page-header user-page__head">
@@ -30,7 +32,7 @@ const MyList = (props) => {
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-        <MoviesList films={films}/>
+        <MoviesList moviesList={moviesList} amountMoviesToRender={amountMoviesToRender} changeAmountMoviesToRender={changeAmountMoviesToRender} />
 
       </section>
 
@@ -52,7 +54,20 @@ const MyList = (props) => {
 };
 
 MyList.propTypes = {
-  films: PropTypes.arrayOf(propsForFilms)
+  moviesList: PropTypes.arrayOf(propsForFilms),
+  amountMoviesToRender: PropTypes.number.isRequired,
+  changeAmountMoviesToRender: PropTypes.func.isRequired,
 };
 
-export default MyList;
+const mapStateToProps = (state) => ({
+  moviesList: state.moviesList,
+  amountMoviesToRender: state.amountMoviesToRender,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  changeAmountMoviesToRender(amount) {
+    dispatch(ActionCreator.changeAmountMoviesToRender(amount));
+  },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(MyList);

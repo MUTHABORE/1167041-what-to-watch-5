@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {propsForFilms} from '../../util/props-validation.js';
-import {extend} from '../../util/utils.js';
 
 import {AMOUNT_MOVIES_TO_RENDER} from '../../util/const.js';
 
@@ -11,6 +10,10 @@ export const withMoviesList = (Component) => {
       super(props);
 
       this.moviesList = props.moviesList;
+
+      this.changeAmountMoviesToRender = props.changeAmountMoviesToRender;
+      this.amountMoviesToRender = props.amountMoviesToRender;
+
 
       this.state = {
         hoveredMovie: null,
@@ -31,16 +34,15 @@ export const withMoviesList = (Component) => {
     }
 
     showMoreButtonClickHandler() {
-      this.setState(extend(this.state, {amountMoviesToRender: this.state.amountMoviesToRender + AMOUNT_MOVIES_TO_RENDER}));
+      this.changeAmountMoviesToRender(this.amountMoviesToRender + AMOUNT_MOVIES_TO_RENDER);
     }
 
     render() {
       this.moviesList = this.props.moviesList;
+      this.amountMoviesToRender = this.props.amountMoviesToRender;
       return (
         <Component
           {...this.props}
-          moviesList={this.moviesList}
-          amountMoviesToRender={this.state.amountMoviesToRender}
           cardHoverHandler={this.cardHoverHandler}
           cardLeaveHoverHandler={this.cardLeaveHoverHandler}
           showMoreButtonClickHandler={this.showMoreButtonClickHandler}
@@ -51,6 +53,8 @@ export const withMoviesList = (Component) => {
 
   WithMoviesList.propTypes = {
     moviesList: PropTypes.arrayOf(propsForFilms).isRequired,
+    amountMoviesToRender: PropTypes.number.isRequired,
+    changeAmountMoviesToRender: PropTypes.func.isRequired,
   };
 
   return WithMoviesList;

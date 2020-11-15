@@ -1,7 +1,8 @@
 import React from 'react';
-import {connect} from 'react-redux';
+import {Link} from 'react-router-dom';
 import {propsForFilms} from '../../util/props-validation.js';
 import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
 
 import GenresList from '../genres-list/genres-list';
 
@@ -27,7 +28,9 @@ const Main = (props) => {
 
           <div className="user-block">
             <div className="user-block__avatar">
-              <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
+              <Link to="/mylist">
+                <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
+              </Link>
             </div>
           </div>
         </header>
@@ -70,9 +73,6 @@ const Main = (props) => {
 
           <GenresList/>
 
-          <div className="catalog__more">
-            <button className="catalog__button" type="button">Show more</button>
-          </div>
         </section>
 
         <footer className="page-footer">

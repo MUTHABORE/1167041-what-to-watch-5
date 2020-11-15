@@ -86,7 +86,7 @@ const Film = (props) => {
         {similarMoviesToRender.length === 0 ? `` : <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
 
-          <MoviesList moviesList={similarMoviesToRender}/>
+          <MoviesList moviesList={similarMoviesToRender} amountMoviesToRender={AMOUNT_SIMILAR_MOVIES_TO_RENDER}/>
         </section>}
 
         <footer className="page-footer">
