@@ -1,5 +1,9 @@
 import React, {PureComponent} from 'react';
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
 import {propsForFilms} from '../../util/props-validation.js';
+
+import {fetchMovieReviews} from '../../store/api-actions.js';
 
 import {TabsTypes} from '../../util/const.js';
 
@@ -13,7 +17,20 @@ export const withMovieTabs = (Component) => {
         currentTab: TabsTypes.OVERVIEW
       };
 
+      this.fetchMovieReviews = props.fetchMovieReviewsAction;
       this._tabsChangeHandler = this._tabsChangeHandler.bind(this);
+    }
+
+    componentDidMount() {
+      this.fetchMovieReviews(this._movie.id);
+    }
+
+    componentDidUpdate() {
+      if (this._movie.id !== this.props.movie.id) {
+        this.setState({currentTab: TabsTypes.OVERVIEW});
+        this._movie = this.props.movie;
+        this.fetchMovieReviews(this._movie.id);
+      }
     }
 
     _tabsChangeHandler(evt, type) {
@@ -26,7 +43,6 @@ export const withMovieTabs = (Component) => {
     }
 
     render() {
-      this._movie = this.props.movie;
       return (
         <Component
           {...this.props}
@@ -40,7 +56,19 @@ export const withMovieTabs = (Component) => {
 
   WithMovieTabs.propTypes = {
     movie: propsForFilms,
+    reviews: PropTypes.array.isRequired,
+    fetchMovieReviewsAction: PropTypes.func.isRequired,
   };
 
-  return WithMovieTabs;
+  const mapStateToProps = (state) => ({
+    reviews: state.DATA.reviews,
+  });
+
+  const mapDispatchToProps = (dispatch) => ({
+    fetchMovieReviewsAction(id) {
+      dispatch(fetchMovieReviews(id));
+    }
+  });
+
+  return connect(mapStateToProps, mapDispatchToProps)(WithMovieTabs);
 };

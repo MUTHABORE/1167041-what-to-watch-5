@@ -4,11 +4,12 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {propsForFilms} from '../../util/props-validation.js';
 
-import {ActionCreator} from '../../store/action.js';
+import {changeAmountMoviesToRender} from '../../store/action.js';
 import MoviesList from '../movies-list/movies-list.jsx';
 
 const MyList = (props) => {
-  const {moviesList, amountMoviesToRender, changeAmountMoviesToRender} = props;
+  const {moviesList, amountMoviesToRender, changeAmountMoviesToRenderAction} = props;
+  const favoritesMovies = moviesList.filter((movie) => movie.is_favorite === true);
   return (
     <div className="user-page">
       <header className="page-header user-page__head">
@@ -32,7 +33,7 @@ const MyList = (props) => {
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-        <MoviesList moviesList={moviesList} amountMoviesToRender={amountMoviesToRender} changeAmountMoviesToRender={changeAmountMoviesToRender} />
+        <MoviesList moviesList={favoritesMovies} amountMoviesToRender={amountMoviesToRender} changeAmountMoviesToRender={changeAmountMoviesToRenderAction} />
 
       </section>
 
@@ -56,17 +57,17 @@ const MyList = (props) => {
 MyList.propTypes = {
   moviesList: PropTypes.arrayOf(propsForFilms),
   amountMoviesToRender: PropTypes.number.isRequired,
-  changeAmountMoviesToRender: PropTypes.func.isRequired,
+  changeAmountMoviesToRenderAction: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  moviesList: state.moviesList,
-  amountMoviesToRender: state.amountMoviesToRender,
+const mapStateToProps = ({DATA, FUNCTIONAL}) => ({
+  moviesList: DATA.moviesList,
+  amountMoviesToRender: FUNCTIONAL.amountMoviesToRender,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  changeAmountMoviesToRender(amount) {
-    dispatch(ActionCreator.changeAmountMoviesToRender(amount));
+  changeAmountMoviesToRenderAction(amount) {
+    dispatch(changeAmountMoviesToRender(amount));
   },
 });
 

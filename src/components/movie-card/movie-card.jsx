@@ -17,7 +17,7 @@ const MovieCard = (props) => {
           <VideoPlayer movie={movie} playerStatus={playerStatus} />
         </div>
         <h3 className="small-movie-card__title">
-          <span>{movie.title}</span>
+          <span>{movie.name}</span>
         </h3>
       </Link>
     </article>

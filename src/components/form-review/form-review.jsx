@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {withFormReview} from '../../hocs/with-form-review/with-form-review.jsx';
 
 export const FormReview = (props) => {
-  const {submitHandler, reviewChangeHandler} = props;
+  const {submitHandler, reviewChangeHandler, isSubmitAvailable} = props;
   return (
     <form action="#" className="add-review__form" onSubmit={submitHandler}>
       <div className="rating">
@@ -26,9 +26,9 @@ export const FormReview = (props) => {
       </div>
 
       <div className="add-review__text">
-        <textarea onChange={reviewChangeHandler} className="add-review__textarea" name="review-text" id="review-text" placeholder="Review text"></textarea>
+        <textarea onChange={reviewChangeHandler} className="add-review__textarea" name="text" id="review-text" placeholder="Review text" minLength="50" maxLength="400"></textarea>
         <div className="add-review__submit">
-          <button className="add-review__btn" type="submit">Post</button>
+          <button className="add-review__btn" type="submit" disabled={isSubmitAvailable === true ? `` : `disabled`}>Post</button>
         </div>
       </div>
     </form>
@@ -38,6 +38,7 @@ export const FormReview = (props) => {
 FormReview.propTypes = {
   submitHandler: PropTypes.func.isRequired,
   reviewChangeHandler: PropTypes.func.isRequired,
+  isSubmitAvailable: PropTypes.bool.isRequired,
 };
 
 export default withFormReview(FormReview);

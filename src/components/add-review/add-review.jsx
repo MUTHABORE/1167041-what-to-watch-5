@@ -10,13 +10,13 @@ import FormReview from '../form-review/form-review.jsx';
 const AddReview = (props) => {
   const movies = props.moviesList;
   const movieId = props.routerProps.match.params.id;
-  const currentMovie = movies.find((elem) => elem.id === movieId);
-  const {title, poster, background} = currentMovie;
+  const currentMovie = movies.find((elem) => elem.id === +movieId);
+  const {name, poster_image, background_image} = currentMovie;
   return (
     <section className="movie-card movie-card--full">
       <div className="movie-card__header">
         <div className="movie-card__bg">
-          <img src={`img/background/${background}`} alt={title} />
+          <img src={background_image} alt={name} />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -33,7 +33,7 @@ const AddReview = (props) => {
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
-                <Link to={`/films/${movieId}`} className="breadcrumbs__link">{title}</Link>
+                <Link to={`/films/${movieId}`} className="breadcrumbs__link">{name}</Link>
               </li>
               <li className="breadcrumbs__item">
                 <a className="breadcrumbs__link">Add review</a>
@@ -49,12 +49,12 @@ const AddReview = (props) => {
         </header>
 
         <div className="movie-card__poster movie-card__poster--small">
-          <img src={`img/posters/${poster}`} alt={title} width="218" height="327" />
+          <img src={poster_image} alt={name} width="218" height="327" />
         </div>
       </div>
 
       <div className="add-review">
-        <FormReview />
+        <FormReview movieId={movieId} />
       </div>
 
     </section>
@@ -67,7 +67,7 @@ AddReview.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  moviesList: state.moviesList,
+  moviesList: state.DATA.moviesList,
 });
 
 export default connect(mapStateToProps)(AddReview);

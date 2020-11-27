@@ -15,22 +15,22 @@ export const getRatingFrase = (rating) => {
   }
 };
 
-export const getAvailableMoviesGenres = (movies) => {
-  let allGenres = [`All genres`];
+// export const getAvailableMoviesGenres = (movies) => {
+//   let allGenres = [`All genres`];
 
-  for (let movie of movies) {
-    allGenres.push(movie.genre);
-  }
+//   for (let movie of movies) {
+//     allGenres.push(movie.genre);
+//   }
 
-  return new Set(allGenres);
-};
+//   return new Set(allGenres);
+// };
 
-export const getFilteredMovies = (movies, genre) => {
-  const genresList = Array.from(getAvailableMoviesGenres(movies));
+// export const getFilteredMovies = (movies, genre) => {
+//   const genresList = Array.from(getAvailableMoviesGenres(movies));
 
-  if (genre === genresList[0]) {
-    return movies;
-  }
+//   if (genre === genresList[0]) {
+//     return movies;
+//   }
 
-  return movies.filter((elem) => elem.genre === genre);
-};
+//   return movies.filter((elem) => elem.genre === genre);
+// };

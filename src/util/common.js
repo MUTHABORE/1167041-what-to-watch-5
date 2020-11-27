@@ -18,3 +18,15 @@ export const getRandomSet = (arr, min = 0, max = arr.length) => {
 export const getRandomNumber = (number, digits = 1) => {
   return (Math.random() * number).toFixed(digits);
 };
+
+export const formatDurationLeft = (durationLeft) => {
+  const addZeroForTime = (time) => {
+    return time < 10 ? `0` + time : time;
+  };
+
+  const hours = addZeroForTime(Math.floor(durationLeft / 3600));
+  const minutes = addZeroForTime(Math.floor((durationLeft - (hours * 3600)) / 60));
+  const seconds = addZeroForTime(Math.floor(durationLeft - (hours * 3600) - (minutes * 60)));
+
+  return `${hours}:${minutes}:${seconds}`;
+};
