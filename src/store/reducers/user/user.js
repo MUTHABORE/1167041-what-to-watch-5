@@ -4,6 +4,7 @@ import {extend} from '../../../util/utils.js';
 
 const initialState = {
   authorizationStatus: AuthorizationStatus.NO_AUTH,
+  user: null,
 };
 
 const user = (state = initialState, action) => {
@@ -11,6 +12,10 @@ const user = (state = initialState, action) => {
     case ActionType.REQUIRED_AUTHORIZATION:
       return extend(state, {
         authorizationStatus: action.payload,
+      });
+    case ActionType.LOAD_USER:
+      return extend(state, {
+        user: action.payload,
       });
   }
 

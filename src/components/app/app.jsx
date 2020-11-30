@@ -22,8 +22,8 @@ const App = (props) => {
           render={(routerProps) => (
             <Main
               routerProps={routerProps}
-              onMylistClick={() => routerProps.history.push(`${AppRoute.MY_LIST}`)}
               onPlayClick={(id) => routerProps.history.push(`/player/${id}`)}
+              onMylistClick={() => routerProps.history.push(`${AppRoute.SIGN_IN}`)}
             />
           )}
         />
@@ -44,8 +44,8 @@ const App = (props) => {
           render={(routerProps) => (
             <Film
               routerProps={routerProps}
-              onMylistClick={() => routerProps.history.push(`${AppRoute.MY_LIST}`)}
               onPlayClick={(id) => routerProps.history.push(`/player/${id}`)}
+              onMylistClick={() => routerProps.history.push(`${AppRoute.SIGN_IN}`)}
             />
           )}
         />
@@ -72,4 +72,5 @@ const mapStateToProps = ({USER}) => ({
   authorizationStatus: USER.authorizationStatus,
 });
 
+export {App};
 export default connect(mapStateToProps)(App);

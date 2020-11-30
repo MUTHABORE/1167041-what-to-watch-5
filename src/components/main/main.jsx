@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import {propsForFilms} from '../../util/props-validation.js';
+import {propsForUser} from '../../util/props-validation.js';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
@@ -9,16 +9,17 @@ import {AppRoute, AuthorizationStatus} from '../../util/const.js';
 import GenresList from '../genres-list/genres-list';
 
 const Main = (props) => {
+  const promoMovie = props.promo;
   const authorizationStatus = props.authorizationStatus;
   const onMylistClick = props.changeMovieFavoriteStatusAction;
+  const onMylistClickNoAuth = props.onMylistClick;
   const onPlayClick = props.onPlayClick;
-  const films = props.moviesList;
-  const film = films[0];
+
   return (
     <React.Fragment>
       <section className="movie-card">
         <div className="movie-card__bg">
-          <img src={film.background_image} alt={film.name} />
+          <img src={promoMovie.background_image} alt={promoMovie.name} />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -39,7 +40,7 @@ const Main = (props) => {
             {authorizationStatus === AuthorizationStatus.AUTH && (
               <div className="user-block__avatar">
                 <Link to={AppRoute.MY_LIST}>
-                  <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
+                  <img src={props.userInfo.avatar_url} alt="User avatar" width="63" height="63" />
                 </Link>
               </div>
             )}
@@ -49,35 +50,44 @@ const Main = (props) => {
         <div className="movie-card__wrap">
           <div className="movie-card__info">
             <div className="movie-card__poster">
-              <img src={film.poster_image} alt={film.name} width="218" height="327" />
+              <img src={promoMovie.poster_image} alt={promoMovie.name} width="218" height="327" />
             </div>
 
             <div className="movie-card__desc">
-              <h2 className="movie-card__title">{film.name}</h2>
+              <h2 className="movie-card__title">{promoMovie.name}</h2>
               <p className="movie-card__meta">
-                <span className="movie-card__genre">{film.genre}</span>
-                <span className="movie-card__year">{film.released}</span>
+                <span className="movie-card__genre">{promoMovie.genre}</span>
+                <span className="movie-card__year">{promoMovie.released}</span>
               </p>
 
               <div className="movie-card__buttons">
-                <button className="btn btn--play movie-card__button" type="button" onClick={() => onPlayClick(`${film.id}`)}>
+                <button className="btn btn--play movie-card__button" type="button" onClick={() => onPlayClick(`${promoMovie.id}`)}>
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"></use>
                   </svg>
                   <span>Play</span>
                 </button>
-                <button className="btn btn--list movie-card__button" type="button" onClick={() => onMylistClick(`${film.is_favorite === true ? 0 : 1}`, `${film.id}`)}>
-                  {film.is_favorite ?
-                    <svg viewBox="0 0 18 14" width="18" height="14">
-                      <use xlinkHref="#in-list"></use>
-                    </svg>
-                    :
+                {authorizationStatus === AuthorizationStatus.AUTH ?
+                  <button className="btn btn--list movie-card__button" type="button" onClick={() => onMylistClick(+!promoMovie.is_favorite, promoMovie.id)}>
+                    {promoMovie.is_favorite ?
+                      <svg viewBox="0 0 18 14" width="18" height="14">
+                        <use xlinkHref="#in-list"></use>
+                      </svg>
+                      :
+                      <svg viewBox="0 0 19 20" width="19" height="20">
+                        <use xlinkHref="#add"></use>
+                      </svg>
+                    }
+                    <span>My list</span>
+                  </button>
+                  :
+                  <button className="btn btn--list movie-card__button" type="button" onClick={() => onMylistClickNoAuth()}>
                     <svg viewBox="0 0 19 20" width="19" height="20">
                       <use xlinkHref="#add"></use>
                     </svg>
-                  }
-                  <span>My list</span>
-                </button>
+                    <span>My list</span>
+                  </button>
+                }
               </div>
             </div>
           </div>
@@ -111,16 +121,18 @@ const Main = (props) => {
 };
 
 Main.propTypes = {
-  moviesList: PropTypes.arrayOf(propsForFilms).isRequired,
   onPlayClick: PropTypes.func.isRequired,
-  onMylistClick: PropTypes.func.isRequired,
   authorizationStatus: PropTypes.string.isRequired,
   changeMovieFavoriteStatusAction: PropTypes.func.isRequired,
+  userInfo: propsForUser,
+  promo: PropTypes.object.isRequired,
+  onMylistClick: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = ({DATA, USER}) => ({
-  moviesList: DATA.moviesList,
   authorizationStatus: USER.authorizationStatus,
+  promo: DATA.promo,
+  userInfo: USER.user,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -129,4 +141,5 @@ const mapDispatchToProps = (dispatch) => ({
   }
 });
 
+export {Main};
 export default connect(mapStateToProps, mapDispatchToProps)(Main);

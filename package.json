@@ -5,7 +5,8 @@
   "description": "Личный проект «Что посмотреть» от HTML Academy",
   "scripts": {
     "eslint": "eslint --ext .jsx --ext .js src/",
-    "test": "npm run eslint",
+    "test": "npm run eslint && npm run test.jest",
+    "test.jest": "jest",
     "build": "webpack --mode production",
     "start": "webpack-dev-server --open"
   },
@@ -13,11 +14,15 @@
     "@babel/core": "7.8.7",
     "@babel/preset-env": "7.8.7",
     "@babel/preset-react": "7.8.3",
+    "axios-mock-adapter": "1.17.0",
     "babel-loader": "8.1.0",
     "eslint": "7.10.0",
     "eslint-config-htmlacademy": "0.6.0",
     "eslint-plugin-react": "7.21.2",
+    "jest": "25.1.0",
+    "react-test-renderer": "16.12.0",
     "redux-devtools-extension": "2.13.8",
+    "redux-mock-store": "1.5.4",
     "webpack": "4.41.6",
     "webpack-cli": "3.3.12",
     "webpack-dev-server": "3.10.3"
@@ -36,6 +41,7 @@
     "react-router-dom": "5.1.2",
     "redux": "4.0.5",
     "redux-thunk": "2.3.0",
-    "reselect": "4.0.0"
+    "reselect": "4.0.0",
+    "sweetalert": "2.1.2"
   }
 }

@@ -7,6 +7,8 @@ export const ActionType = {
   REQUIRED_AUTHORIZATION: `REQUIRED_AUTHORIZATION`,
   REDIRECT_TO_ROUTE: `REDIRECT_TO_ROUTE`,
   POST_REVIEW: `POST_REVIEW`,
+  LOAD_USER: `LOAD_USER`,
+  LOAD_PROMO: `LOAD_PROMO`,
 };
 
 export const loadMovies = (moviesList) => ({
@@ -37,4 +39,14 @@ export const redirectToRoute = (url) => ({
 export const requireAuthorization = (status) => ({
   type: ActionType.REQUIRED_AUTHORIZATION,
   payload: status,
+});
+
+export const loadUser = (data) => ({
+  type: ActionType.LOAD_USER,
+  payload: data,
+});
+
+export const loadPromo = (promo) => ({
+  type: ActionType.LOAD_PROMO,
+  payload: promo,
 });

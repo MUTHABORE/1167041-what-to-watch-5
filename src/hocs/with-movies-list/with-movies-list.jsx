@@ -25,6 +25,10 @@ export const withMoviesList = (Component) => {
       this.showMoreButtonClickHandler = this.showMoreButtonClickHandler.bind(this);
     }
 
+    componentWillUnmount() {
+      this.changeAmountMoviesToRender(AMOUNT_MOVIES_TO_RENDER);
+    }
+
     cardHoverHandler(id) {
       this.setState({hoveredMovie: id});
     }

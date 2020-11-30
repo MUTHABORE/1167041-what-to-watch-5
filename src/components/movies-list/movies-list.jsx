@@ -35,4 +35,5 @@ MoviesList.propTypes = {
   showMoreButtonClickHandler: PropTypes.func.isRequired,
 };
 
+export {MoviesList};
 export default withMoviesList(MoviesList);

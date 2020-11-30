@@ -68,4 +68,5 @@ Player.propTypes = {
   isPlaying: PropTypes.bool.isRequired,
 };
 
+export {Player};
 export default withPlayer(Player);

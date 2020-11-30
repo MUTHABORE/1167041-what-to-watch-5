@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should MovieCard render correctly 1`] = `
+<article
+  className="small-movie-card catalog__movies-card"
+  onMouseEnter={[Function]}
+  onMouseLeave={[Function]}
+>
+  <a
+    className="small-movie-card__link"
+    href="/films/1"
+    onClick={[Function]}
+  >
+    <div
+      className="small-movie-card__image"
+    >
+      <video
+        height={175}
+        loop={true}
+        muted={true}
+        poster="https://assets.htmlacademy.ru/intensives/javascript-3/film/preview/bronson.jpg"
+        preload="true"
+        src="http://media.xiph.org/mango/tears_of_steel_1080p.webm"
+        width={280}
+      />
+    </div>
+    <h3
+      className="small-movie-card__title"
+    >
+      <span>
+        Bronson
+      </span>
+    </h3>
+  </a>
+</article>
+`;

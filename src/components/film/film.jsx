@@ -7,7 +7,7 @@ import {Link} from 'react-router-dom';
 import {changeAmountMoviesToRender} from '../../store/action.js';
 import {changeMovieFavoriteStatus} from '../../store/api-actions.js';
 import MovieTabs from '../movie-tabs/movie-tabs.jsx';
-import {propsForFilms, propsForRouterProps} from '../../util/props-validation.js';
+import {propsForFilms, propsForRouterProps, propsForUser} from '../../util/props-validation.js';
 import MoviesList from '../movies-list/movies-list.jsx';
 import {AMOUNT_SIMILAR_MOVIES_TO_RENDER} from '../../util/const.js';
 
@@ -15,12 +15,12 @@ const Film = (props) => {
   const {onPlayClick, changeAmountMoviesToRenderAction, moviesList, changeMovieFavoriteStatusAction} = props;
   const movieId = props.routerProps.match.params.id;
   const currentMovie = moviesList.find((elem) => elem.id.toString() === movieId);
-  const {name, genre, released, poster_image, background_image, id} = currentMovie;
   const onMylistClick = changeMovieFavoriteStatusAction;
+  const onMylistClickNoAuth = props.onMylistClick;
 
   const authorizationStatus = props.authorizationStatus;
 
-  const similarMovies = moviesList.filter((elem) => (elem.genre === genre) && (elem.id !== id));
+  const similarMovies = moviesList.filter((elem) => (elem.genre === currentMovie.genre) && (elem.id !== currentMovie.id));
   const similarMoviesToRender = similarMovies.slice(0, AMOUNT_SIMILAR_MOVIES_TO_RENDER);
 
   return (
@@ -28,7 +28,7 @@ const Film = (props) => {
       <section className="movie-card movie-card--full">
         <div className="movie-card__hero">
           <div className="movie-card__bg">
-            <img src={background_image} alt={name} />
+            <img src={currentMovie.background_image} alt={currentMovie.name} />
           </div>
 
           <h1 className="visually-hidden">WTW</h1>
@@ -49,7 +49,7 @@ const Film = (props) => {
               {authorizationStatus === AuthorizationStatus.AUTH && (
                 <div className="user-block__avatar">
                   <Link to={AppRoute.MY_LIST}>
-                    <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
+                    <img src={props.userInfo.avatar_url} alt="User avatar" width="63" height="63" />
                   </Link>
                 </div>
               )}
@@ -58,10 +58,10 @@ const Film = (props) => {
 
           <div className="movie-card__wrap">
             <div className="movie-card__desc">
-              <h2 className="movie-card__title">{name}</h2>
+              <h2 className="movie-card__title">{currentMovie.name}</h2>
               <p className="movie-card__meta">
-                <span className="movie-card__genre">{genre}</span>
-                <span className="movie-card__year">{released}</span>
+                <span className="movie-card__genre">{currentMovie.genre}</span>
+                <span className="movie-card__year">{currentMovie.released}</span>
               </p>
 
               <div className="movie-card__buttons">
@@ -71,18 +71,27 @@ const Film = (props) => {
                   </svg>
                   <span>Play</span>
                 </button>
-                <button className="btn btn--list movie-card__button" type="button" onClick={() => onMylistClick(`${currentMovie.is_favorite === true ? 0 : 1}`, `${currentMovie.id}`)}>
-                  {currentMovie.is_favorite ?
-                    <svg viewBox="0 0 18 14" width="18" height="14">
-                      <use xlinkHref="#in-list"></use>
-                    </svg>
-                    :
+                {authorizationStatus === AuthorizationStatus.AUTH ?
+                  <button className="btn btn--list movie-card__button" type="button" onClick={() => onMylistClick(+!currentMovie.is_favorite, currentMovie.id)}>
+                    {currentMovie.is_favorite ?
+                      <svg viewBox="0 0 18 14" width="18" height="14">
+                        <use xlinkHref="#in-list"></use>
+                      </svg>
+                      :
+                      <svg viewBox="0 0 19 20" width="19" height="20">
+                        <use xlinkHref="#add"></use>
+                      </svg>
+                    }
+                    <span>My list</span>
+                  </button>
+                  :
+                  <button className="btn btn--list movie-card__button" type="button" onClick={() => onMylistClickNoAuth()}>
                     <svg viewBox="0 0 19 20" width="19" height="20">
                       <use xlinkHref="#add"></use>
                     </svg>
-                  }
-                  <span>My list</span>
-                </button>
+                    <span>My list</span>
+                  </button>
+                }
                 {authorizationStatus === AuthorizationStatus.AUTH ?
                   <Link to={`/films/${movieId}/review`} className="btn movie-card__button">Add review</Link>
                   :
@@ -96,7 +105,7 @@ const Film = (props) => {
         <div className="movie-card__wrap movie-card__translate-top">
           <div className="movie-card__info">
             <div className="movie-card__poster movie-card__poster--big">
-              <img src={poster_image} alt={name} width="218" height="327" />
+              <img src={currentMovie.poster_image} alt={currentMovie.name} width="218" height="327" />
             </div>
 
             <MovieTabs movie={currentMovie}/>
@@ -134,14 +143,16 @@ Film.propTypes = {
   routerProps: propsForRouterProps,
   changeAmountMoviesToRenderAction: PropTypes.func.isRequired,
   onPlayClick: PropTypes.func.isRequired,
-  onMylistClick: PropTypes.func.isRequired,
   authorizationStatus: PropTypes.string.isRequired,
   changeMovieFavoriteStatusAction: PropTypes.func.isRequired,
+  userInfo: propsForUser,
+  onMylistClick: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = ({DATA, USER}) => ({
   moviesList: DATA.moviesList,
   authorizationStatus: USER.authorizationStatus,
+  userInfo: USER.user,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -153,4 +164,5 @@ const mapDispatchToProps = (dispatch) => ({
   },
 });
 
+export {Film};
 export default connect(mapStateToProps, mapDispatchToProps)(Film);

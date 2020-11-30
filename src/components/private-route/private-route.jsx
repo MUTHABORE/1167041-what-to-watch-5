@@ -7,11 +7,10 @@ import {AuthorizationStatus} from '../../util/const.js';
 import {AppRoute} from '../../util/const.js';
 
 const PrivateRoute = (props) => {
-  const {render, path, exact, authorizationStatus} = props;
+  const {render, authorizationStatus} = props;
   return (
     <Route
-      path={path}
-      exact={exact}
+      {...props}
       render={(routeProps) => {
         return (
           authorizationStatus === AuthorizationStatus.AUTH
@@ -25,8 +24,6 @@ const PrivateRoute = (props) => {
 
 PrivateRoute.propTypes = {
   authorizationStatus: PropTypes.string.isRequired,
-  exact: PropTypes.bool.isRequired,
-  path: PropTypes.string.isRequired,
   render: PropTypes.func.isRequired,
 };
 

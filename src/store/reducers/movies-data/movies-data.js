@@ -6,6 +6,7 @@ import {getAvailableMoviesGenres} from '../../selectors.js';
 const initialState = {
   moviesList: [],
   genresList: [],
+  promo: ``,
   reviews: [],
 };
 
@@ -19,6 +20,10 @@ const moviesData = (state = initialState, action) => {
     case ActionType.LOAD_REVIEWS:
       return extend(state, {
         reviews: action.payload,
+      });
+    case ActionType.LOAD_PROMO:
+      return extend(state, {
+        promo: action.payload,
       });
   }
 

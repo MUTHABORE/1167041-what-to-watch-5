@@ -118,4 +118,5 @@ MovieTabs.propTypes = {
   reviews: PropTypes.array.isRequired,
 };
 
+export {MovieTabs};
 export default withMovieTabs(MovieTabs);

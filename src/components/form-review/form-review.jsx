@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {withFormReview} from '../../hocs/with-form-review/with-form-review.jsx';
 
-export const FormReview = (props) => {
+const FormReview = (props) => {
   const {submitHandler, reviewChangeHandler, isSubmitAvailable} = props;
   return (
     <form action="#" className="add-review__form" onSubmit={submitHandler}>
@@ -41,4 +41,5 @@ FormReview.propTypes = {
   isSubmitAvailable: PropTypes.bool.isRequired,
 };
 
+export {FormReview};
 export default withFormReview(FormReview);

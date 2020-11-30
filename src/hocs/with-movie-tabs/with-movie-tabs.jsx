@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {propsForFilms} from '../../util/props-validation.js';
+import {propsForComments, propsForFilms} from '../../util/props-validation.js';
 
 import {fetchMovieReviews} from '../../store/api-actions.js';
 
@@ -56,7 +56,7 @@ export const withMovieTabs = (Component) => {
 
   WithMovieTabs.propTypes = {
     movie: propsForFilms,
-    reviews: PropTypes.array.isRequired,
+    reviews: PropTypes.arrayOf(propsForComments),
     fetchMovieReviewsAction: PropTypes.func.isRequired,
   };
 

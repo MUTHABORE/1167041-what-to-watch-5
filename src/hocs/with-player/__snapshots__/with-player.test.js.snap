@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should withPlayer render correctly 1`] = `
+<div>
+  <video
+    className="player__video"
+    loop={true}
+    muted={true}
+    onTimeUpdate={[Function]}
+    poster="https://assets.htmlacademy.ru/intensives/javascript-3/film/preview/bronson.jpg"
+    src="http://media.xiph.org/mango/tears_of_steel_1080p.webm"
+  />
+</div>
+`;

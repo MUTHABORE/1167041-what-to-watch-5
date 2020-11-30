@@ -31,4 +31,5 @@ MovieCard.propTypes = {
   mouseLeaveHandler: PropTypes.func.isRequired
 };
 
+export {MovieCard};
 export default withMovieCard(MovieCard);

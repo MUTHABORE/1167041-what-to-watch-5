@@ -2,21 +2,24 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
+import {AppRoute, AuthorizationStatus} from '../../util/const.js';
 
 import {propsForFilms, propsForRouterProps} from '../../util/props-validation.js';
 
 import FormReview from '../form-review/form-review.jsx';
 
 const AddReview = (props) => {
+  const userAvatar = props.userInfo.avatar_url;
+  const authorizationStatus = props.authorizationStatus;
   const movies = props.moviesList;
   const movieId = props.routerProps.match.params.id;
-  const currentMovie = movies.find((elem) => elem.id === +movieId);
-  const {name, poster_image, background_image} = currentMovie;
+  const currentMovie = movies.find((elem) => elem.id.toString() === movieId);
+
   return (
     <section className="movie-card movie-card--full">
       <div className="movie-card__header">
         <div className="movie-card__bg">
-          <img src={background_image} alt={name} />
+          <img src={currentMovie.background_image} alt={currentMovie.name} />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -33,7 +36,7 @@ const AddReview = (props) => {
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
-                <Link to={`/films/${movieId}`} className="breadcrumbs__link">{name}</Link>
+                <Link to={`/films/${movieId}`} className="breadcrumbs__link">{currentMovie.name}</Link>
               </li>
               <li className="breadcrumbs__item">
                 <a className="breadcrumbs__link">Add review</a>
@@ -42,14 +45,21 @@ const AddReview = (props) => {
           </nav>
 
           <div className="user-block">
-            <div className="user-block__avatar">
-              <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-            </div>
+            {authorizationStatus === AuthorizationStatus.NO_AUTH && (
+              <Link to={AppRoute.SIGN_IN} className="user-block__link">Sign in</Link>
+            )}
+            {authorizationStatus === AuthorizationStatus.AUTH && (
+              <div className="user-block__avatar">
+                <Link to={AppRoute.MY_LIST}>
+                  <img src={userAvatar} alt="User avatar" width="63" height="63" />
+                </Link>
+              </div>
+            )}
           </div>
         </header>
 
         <div className="movie-card__poster movie-card__poster--small">
-          <img src={poster_image} alt={name} width="218" height="327" />
+          <img src={currentMovie.poster_image} alt={currentMovie.name} width="218" height="327" />
         </div>
       </div>
 
@@ -63,11 +73,16 @@ const AddReview = (props) => {
 
 AddReview.propTypes = {
   moviesList: PropTypes.arrayOf(propsForFilms).isRequired,
-  routerProps: propsForRouterProps
+  routerProps: propsForRouterProps,
+  authorizationStatus: PropTypes.string.isRequired,
+  userInfo: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  moviesList: state.DATA.moviesList,
+const mapStateToProps = ({DATA, USER}) => ({
+  moviesList: DATA.moviesList,
+  authorizationStatus: USER.authorizationStatus,
+  userInfo: USER.user,
 });
 
+export {AddReview};
 export default connect(mapStateToProps)(AddReview);

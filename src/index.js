@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import swal from 'sweetalert';
 import {createStore, applyMiddleware} from 'redux';
 import {composeWithDevTools} from 'redux-devtools-extension';
 import {Provider} from 'react-redux';
@@ -8,7 +9,7 @@ import {createAPI} from './services/api.js';
 import App from './components/app/app';
 import rootReducer from './store/root-reducer.js';
 import {requireAuthorization} from './store/action.js';
-import {fetchMoviesList, checkAuth} from './store/api-actions.js';
+import {fetchMoviesList, checkAuth, fetchPromoMovie} from './store/api-actions.js';
 import {AuthorizationStatus} from './util/const.js';
 import {redirect} from './store/middlewares/redirect';
 
@@ -25,6 +26,7 @@ const store = createStore(
 
 Promise.all([
   store.dispatch(fetchMoviesList()),
+  store.dispatch(fetchPromoMovie()),
   store.dispatch(checkAuth()),
 ])
 .then(() => {
@@ -34,4 +36,5 @@ Promise.all([
       </Provider>,
       document.querySelector(`#root`)
   );
-});
+})
+.catch(() => swal(`Something went wrong.`));

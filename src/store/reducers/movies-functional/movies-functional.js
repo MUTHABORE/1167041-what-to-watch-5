@@ -1,12 +1,11 @@
 import {extend} from '../../../util/utils.js';
 import {ActionType} from '../../action';
 
-import {AMOUNT_MOVIES_TO_RENDER, AuthorizationStatus} from '../../../util/const.js';
+import {AMOUNT_MOVIES_TO_RENDER} from '../../../util/const.js';
 
 const initialState = {
   activeGenre: `All genres`,
   amountMoviesToRender: AMOUNT_MOVIES_TO_RENDER,
-  isAuthorized: AuthorizationStatus.NO_AUTH,
 };
 
 const moviesFunctional = (state = initialState, action) => {

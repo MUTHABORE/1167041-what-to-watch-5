@@ -8,6 +8,7 @@ import {changeAmountMoviesToRender} from '../../store/action.js';
 import MoviesList from '../movies-list/movies-list.jsx';
 
 const MyList = (props) => {
+  const userAvatar = props.userInfo.avatar_url;
   const {moviesList, amountMoviesToRender, changeAmountMoviesToRenderAction} = props;
   const favoritesMovies = moviesList.filter((movie) => movie.is_favorite === true);
   return (
@@ -25,7 +26,7 @@ const MyList = (props) => {
 
         <div className="user-block">
           <div className="user-block__avatar">
-            <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
+            <img src={userAvatar} alt="User avatar" width="63" height="63" />
           </div>
         </div>
       </header>
@@ -58,11 +59,13 @@ MyList.propTypes = {
   moviesList: PropTypes.arrayOf(propsForFilms),
   amountMoviesToRender: PropTypes.number.isRequired,
   changeAmountMoviesToRenderAction: PropTypes.func.isRequired,
+  userInfo: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = ({DATA, FUNCTIONAL}) => ({
+const mapStateToProps = ({DATA, FUNCTIONAL, USER}) => ({
   moviesList: DATA.moviesList,
   amountMoviesToRender: FUNCTIONAL.amountMoviesToRender,
+  userInfo: USER.user,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -71,4 +74,5 @@ const mapDispatchToProps = (dispatch) => ({
   },
 });
 
+export {MyList};
 export default connect(mapStateToProps, mapDispatchToProps)(MyList);
