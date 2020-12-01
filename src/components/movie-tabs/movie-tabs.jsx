@@ -38,7 +38,7 @@ const MovieTabs = (props) => {
             <div className="movie-rating__score">{movie.rating}</div>
             <p className="movie-rating__meta">
               <span className="movie-rating__level">{getRatingFrase(movie.rating)}</span>
-              <span className="movie-rating__count">{`${movie.scores_count} ratings`}</span>
+              <span className="movie-rating__count">{`${movie.votes} ratings`}</span>
             </p>
           </div>
 
@@ -75,7 +75,7 @@ const MovieTabs = (props) => {
           <div className="movie-card__text-col">
             <p className="movie-card__details-item">
               <strong className="movie-card__details-name">Run Time</strong>
-              <span className="movie-card__details-value">{(movie.run_time / 60 | 0) + `h ` + (movie.run_time % 60) + `m`}</span>
+              <span className="movie-card__details-value">{(movie.runtime / 60 | 0) + `h ` + (movie.runtime % 60) + `m`}</span>
             </p>
             <p className="movie-card__details-item">
               <strong className="movie-card__details-name">Genre</strong>

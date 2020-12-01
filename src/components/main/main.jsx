@@ -14,12 +14,11 @@ const Main = (props) => {
   const onMylistClick = props.changeMovieFavoriteStatusAction;
   const onMylistClickNoAuth = props.onMylistClick;
   const onPlayClick = props.onPlayClick;
-
   return (
     <React.Fragment>
       <section className="movie-card">
         <div className="movie-card__bg">
-          <img src={promoMovie.background_image} alt={promoMovie.name} />
+          <img src={promoMovie.background} alt={promoMovie.name} />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -40,7 +39,7 @@ const Main = (props) => {
             {authorizationStatus === AuthorizationStatus.AUTH && (
               <div className="user-block__avatar">
                 <Link to={AppRoute.MY_LIST}>
-                  <img src={props.userInfo.avatar_url} alt="User avatar" width="63" height="63" />
+                  <img src={props.userInfo.avatarUrl} alt="User avatar" width="63" height="63" />
                 </Link>
               </div>
             )}
@@ -50,7 +49,7 @@ const Main = (props) => {
         <div className="movie-card__wrap">
           <div className="movie-card__info">
             <div className="movie-card__poster">
-              <img src={promoMovie.poster_image} alt={promoMovie.name} width="218" height="327" />
+              <img src={promoMovie.poster} alt={promoMovie.name} width="218" height="327" />
             </div>
 
             <div className="movie-card__desc">
@@ -68,8 +67,8 @@ const Main = (props) => {
                   <span>Play</span>
                 </button>
                 {authorizationStatus === AuthorizationStatus.AUTH ?
-                  <button className="btn btn--list movie-card__button" type="button" onClick={() => onMylistClick(+!promoMovie.is_favorite, promoMovie.id)}>
-                    {promoMovie.is_favorite ?
+                  <button className="btn btn--list movie-card__button" type="button" onClick={() => onMylistClick(+!promoMovie.isFavorite, promoMovie.id)}>
+                    {promoMovie.isFavorite ?
                       <svg viewBox="0 0 18 14" width="18" height="14">
                         <use xlinkHref="#in-list"></use>
                       </svg>

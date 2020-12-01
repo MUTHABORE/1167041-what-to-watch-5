@@ -10,6 +10,7 @@ test(`Should FormReview render correctly`, () => {
           submitHandler={noop}
           reviewChangeHandler={noop}
           isSubmitAvailable={false}
+          isReviewEditingAvailable={true}
         />
     )
     .toJSON();

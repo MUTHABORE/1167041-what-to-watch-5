@@ -13,8 +13,10 @@ export const withFormReview = (Component) => {
         text: ``,
         rating: null,
         isSubmitAvailable: false,
+        isReviewEditingAvailable: true,
       };
 
+      this.openReviewEditing = this.openReviewEditing.bind(this);
       this._submitHandler = this._submitHandler.bind(this);
       this._reviewChangeHandler = this._reviewChangeHandler.bind(this);
     }
@@ -27,11 +29,16 @@ export const withFormReview = (Component) => {
       }
     }
 
+    openReviewEditing() {
+      this.setState({isReviewEditingAvailable: true});
+    }
+
     _submitHandler(evt) {
       evt.preventDefault();
 
       this.setState({isSubmitAvailable: false});
-      this.props.postReviewAction({comment: this.state.text, rating: this.state.rating}, this.props.movieId);
+      this.setState({isReviewEditingAvailable: false});
+      this.props.postReviewAction({comment: this.state.text, rating: this.state.rating}, this.props.movieId, this.openReviewEditing);
     }
 
     _reviewChangeHandler(evt) {
@@ -44,6 +51,7 @@ export const withFormReview = (Component) => {
         <Component
           {...this.props}
           isSubmitAvailable={this.state.isSubmitAvailable}
+          isReviewEditingAvailable={this.state.isReviewEditingAvailable}
           submitHandler={this._submitHandler}
           reviewChangeHandler={this._reviewChangeHandler}
         />
@@ -57,8 +65,8 @@ export const withFormReview = (Component) => {
   };
 
   const mapDispatchToProps = (dispatch) => ({
-    postReviewAction({comment, rating}, id) {
-      dispatch(postReview({comment, rating}, id));
+    postReviewAction({comment, rating}, id, openReviewEditing) {
+      dispatch(postReview({comment, rating}, id, openReviewEditing));
     }
   });
 

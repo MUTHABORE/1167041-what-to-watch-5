@@ -14,6 +14,7 @@ exports[`Should FormReview render correctly 1`] = `
     >
       <input
         className="rating__input"
+        disabled=""
         id="star-1"
         name="rating"
         onChange={[Function]}
@@ -28,6 +29,7 @@ exports[`Should FormReview render correctly 1`] = `
       </label>
       <input
         className="rating__input"
+        disabled=""
         id="star-2"
         name="rating"
         onChange={[Function]}
@@ -42,7 +44,7 @@ exports[`Should FormReview render correctly 1`] = `
       </label>
       <input
         className="rating__input"
-        defaultChecked={true}
+        disabled=""
         id="star-3"
         name="rating"
         onChange={[Function]}
@@ -57,6 +59,7 @@ exports[`Should FormReview render correctly 1`] = `
       </label>
       <input
         className="rating__input"
+        disabled=""
         id="star-4"
         name="rating"
         onChange={[Function]}
@@ -71,6 +74,7 @@ exports[`Should FormReview render correctly 1`] = `
       </label>
       <input
         className="rating__input"
+        disabled=""
         id="star-5"
         name="rating"
         onChange={[Function]}
@@ -90,6 +94,7 @@ exports[`Should FormReview render correctly 1`] = `
   >
     <textarea
       className="add-review__textarea"
+      disabled=""
       id="review-text"
       maxLength="400"
       minLength="50"

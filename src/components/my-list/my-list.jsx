@@ -8,9 +8,9 @@ import {changeAmountMoviesToRender} from '../../store/action.js';
 import MoviesList from '../movies-list/movies-list.jsx';
 
 const MyList = (props) => {
-  const userAvatar = props.userInfo.avatar_url;
+  const userAvatar = props.userInfo.avatarUrl;
   const {moviesList, amountMoviesToRender, changeAmountMoviesToRenderAction} = props;
-  const favoritesMovies = moviesList.filter((movie) => movie.is_favorite === true);
+  const favoritesMovies = moviesList.filter((movie) => movie.isFavorite === true);
   return (
     <div className="user-page">
       <header className="page-header user-page__head">

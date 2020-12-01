@@ -74,13 +74,13 @@ describe(`Should user async login work correctly`, () => {
         type: ActionType.LOAD_USER,
         payload: {fake: true},
       });
-      expect(dispatch).toHaveBeenNthCalledWith(2, {
-        type: ActionType.REQUIRED_AUTHORIZATION,
-        payload: AuthorizationStatus.AUTH,
-      });
-      expect(dispatch).toHaveBeenNthCalledWith(4, {
+      expect(dispatch).toHaveBeenNthCalledWith(3, {
         type: ActionType.REDIRECT_TO_ROUTE,
         payload: AppRoute.ROOT,
+      });
+      expect(dispatch).toHaveBeenNthCalledWith(4, {
+        type: ActionType.REQUIRED_AUTHORIZATION,
+        payload: AuthorizationStatus.AUTH,
       });
     });
   });

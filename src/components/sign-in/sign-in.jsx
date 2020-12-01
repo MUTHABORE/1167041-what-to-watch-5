@@ -1,7 +1,8 @@
 import React, {PureComponent, createRef} from 'react';
 import PropTypes from 'prop-types';
+import swal from 'sweetalert';
 import {Link} from 'react-router-dom';
-import {AppRoute} from '../../util/const.js';
+import {AppRoute, EMAIL_REGEXP} from '../../util/const.js';
 import {login} from '../../store/api-actions.js';
 import {connect} from 'react-redux';
 
@@ -20,9 +21,22 @@ class SignIn extends PureComponent {
 
     evt.preventDefault();
 
+    const emailValue = this.emailRef.current.value;
+    const passwordValue = this.passwordRef.current.value;
+
+    if (emailValue === `` || passwordValue === ``) {
+      swal(`Error`, `Login and password should not be empty.`, `error`);
+      return;
+    }
+
+    if (!EMAIL_REGEXP.test(emailValue)) {
+      swal(`Error`, `Please enter a valid email address`, `error`);
+      return;
+    }
+
     onSubmit({
-      email: this.emailRef.current.value,
-      password: this.passwordRef.current.value,
+      email: emailValue,
+      password: passwordValue,
     });
   }
 
@@ -49,7 +63,7 @@ class SignIn extends PureComponent {
                 <label className="sign-in__label visually-hidden" htmlFor="user-email">Email address</label>
               </div>
               <div className="sign-in__field">
-                <input ref={this.passwordRef} className="sign-in__input" type="password" placeholder="Password" name="user-password" id="user-password" />
+                <input ref={this.passwordRef} className="sign-in__input" type="password" placeholder="Password" name="user-password" id="user-password" autoComplete="on" />
                 <label className="sign-in__label visually-hidden" htmlFor="user-password">Password</label>
               </div>
             </div>

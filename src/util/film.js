@@ -1,3 +1,5 @@
+import {extend} from '../util/utils.js';
+
 export const getRatingFrase = (rating) => {
   switch (true) {
     case rating <= 3:
@@ -15,22 +17,31 @@ export const getRatingFrase = (rating) => {
   }
 };
 
-// export const getAvailableMoviesGenres = (movies) => {
-//   let allGenres = [`All genres`];
+export const adaptMovieToClient = (movie) => {
+  const adaptedMovie = extend(
+      movie,
+      {
+        poster: movie.poster_image,
+        preview: movie.preview_image,
+        background: movie.background_image,
+        backgroundColor: movie.background_color,
+        previewVideo: movie.preview_video_link,
+        video: movie.video_link,
+        votes: movie.scores_count,
+        runtime: movie.run_time,
+        isFavorite: movie.is_favorite,
+      }
+  );
 
-//   for (let movie of movies) {
-//     allGenres.push(movie.genre);
-//   }
+  delete adaptedMovie.poster_image;
+  delete adaptedMovie.preview_image;
+  delete adaptedMovie.background_image;
+  delete adaptedMovie.background_color;
+  delete adaptedMovie.preview_video_link;
+  delete adaptedMovie.video_link;
+  delete adaptedMovie.scores_count;
+  delete adaptedMovie.run_time;
+  delete adaptedMovie.is_favorite;
 
-//   return new Set(allGenres);
-// };
-
-// export const getFilteredMovies = (movies, genre) => {
-//   const genresList = Array.from(getAvailableMoviesGenres(movies));
-
-//   if (genre === genresList[0]) {
-//     return movies;
-//   }
-
-//   return movies.filter((elem) => elem.genre === genre);
-// };
+  return adaptedMovie;
+};

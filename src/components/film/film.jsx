@@ -28,7 +28,7 @@ const Film = (props) => {
       <section className="movie-card movie-card--full">
         <div className="movie-card__hero">
           <div className="movie-card__bg">
-            <img src={currentMovie.background_image} alt={currentMovie.name} />
+            <img src={currentMovie.background} alt={currentMovie.name} />
           </div>
 
           <h1 className="visually-hidden">WTW</h1>
@@ -49,7 +49,7 @@ const Film = (props) => {
               {authorizationStatus === AuthorizationStatus.AUTH && (
                 <div className="user-block__avatar">
                   <Link to={AppRoute.MY_LIST}>
-                    <img src={props.userInfo.avatar_url} alt="User avatar" width="63" height="63" />
+                    <img src={props.userInfo.avatarUrl} alt="User avatar" width="63" height="63" />
                   </Link>
                 </div>
               )}
@@ -72,8 +72,8 @@ const Film = (props) => {
                   <span>Play</span>
                 </button>
                 {authorizationStatus === AuthorizationStatus.AUTH ?
-                  <button className="btn btn--list movie-card__button" type="button" onClick={() => onMylistClick(+!currentMovie.is_favorite, currentMovie.id)}>
-                    {currentMovie.is_favorite ?
+                  <button className="btn btn--list movie-card__button" type="button" onClick={() => onMylistClick(+!currentMovie.isFavorite, currentMovie.id)}>
+                    {currentMovie.isFavorite ?
                       <svg viewBox="0 0 18 14" width="18" height="14">
                         <use xlinkHref="#in-list"></use>
                       </svg>
@@ -105,7 +105,7 @@ const Film = (props) => {
         <div className="movie-card__wrap movie-card__translate-top">
           <div className="movie-card__info">
             <div className="movie-card__poster movie-card__poster--big">
-              <img src={currentMovie.poster_image} alt={currentMovie.name} width="218" height="327" />
+              <img src={currentMovie.poster} alt={currentMovie.name} width="218" height="327" />
             </div>
 
             <MovieTabs movie={currentMovie}/>

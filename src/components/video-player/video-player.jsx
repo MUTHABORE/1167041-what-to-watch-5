@@ -39,8 +39,8 @@ class VideoPlayer extends PureComponent {
   render() {
     return <video
       ref={this.videoRef}
-      src={this._movie.video_link}
-      poster={this._movie.preview_image}
+      src={this._movie.video}
+      poster={this._movie.preview}
       width={CARD_SIZE.width}
       height={CARD_SIZE.height}
       preload="true"

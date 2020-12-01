@@ -37,3 +37,5 @@ export const APIRoute = {
   FAVORITE: `/favorite/`,
   PROMO: `/films/promo`,
 };
+
+export const EMAIL_REGEXP = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;

@@ -1,32 +1,29 @@
 import PropTypes from 'prop-types';
 
-/* eslint-disable */
-
 export const propsForFilms = PropTypes.shape({
   id: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
-  poster_image: PropTypes.string.isRequired,
-  background_image: PropTypes.string.isRequired,
-  preview_image: PropTypes.string.isRequired,
-  preview_video_link: PropTypes.string.isRequired,
+  poster: PropTypes.string.isRequired,
+  background: PropTypes.string.isRequired,
+  preview: PropTypes.string.isRequired,
+  previewVideo: PropTypes.string.isRequired,
   genre: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   director: PropTypes.string.isRequired,
   starring: PropTypes.array.isRequired,
   released: PropTypes.number.isRequired,
   rating: PropTypes.number.isRequired,
-  scores_count: PropTypes.number.isRequired,
-  run_time: PropTypes.number.isRequired,
+  votes: PropTypes.number.isRequired,
+  runtime: PropTypes.number.isRequired,
+  isFavorite: PropTypes.bool.isRequired,
 }).isRequired;
 
 export const propsForUser = PropTypes.shape({
   id: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
-  avatar_url: PropTypes.string.isRequired,
+  avatarUrl: PropTypes.string.isRequired,
 });
-
-/* eslint-enable */
 
 export const propsForComments = PropTypes.shape({
   id: PropTypes.number.isRequired,

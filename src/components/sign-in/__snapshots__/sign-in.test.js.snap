@@ -69,6 +69,7 @@ exports[`Should SignIn render correctly 1`] = `
           className="sign-in__field"
         >
           <input
+            autoComplete="on"
             className="sign-in__input"
             id="user-password"
             name="user-password"

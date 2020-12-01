@@ -9,7 +9,7 @@ import {propsForFilms, propsForRouterProps} from '../../util/props-validation.js
 import FormReview from '../form-review/form-review.jsx';
 
 const AddReview = (props) => {
-  const userAvatar = props.userInfo.avatar_url;
+  const userAvatar = props.userInfo.avatarUrl;
   const authorizationStatus = props.authorizationStatus;
   const movies = props.moviesList;
   const movieId = props.routerProps.match.params.id;
@@ -19,7 +19,7 @@ const AddReview = (props) => {
     <section className="movie-card movie-card--full">
       <div className="movie-card__header">
         <div className="movie-card__bg">
-          <img src={currentMovie.background_image} alt={currentMovie.name} />
+          <img src={currentMovie.background} alt={currentMovie.name} />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -59,7 +59,7 @@ const AddReview = (props) => {
         </header>
 
         <div className="movie-card__poster movie-card__poster--small">
-          <img src={currentMovie.poster_image} alt={currentMovie.name} width="218" height="327" />
+          <img src={currentMovie.poster} alt={currentMovie.name} width="218" height="327" />
         </div>
       </div>
 

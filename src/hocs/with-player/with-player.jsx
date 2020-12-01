@@ -78,8 +78,8 @@ export const withPlayer = (Component) => {
           <video
             ref={this.videoRef}
             className="player__video"
-            src={this.movie.video_link}
-            poster={this.movie.preview_image}
+            src={this.movie.previewVideo}
+            poster={this.movie.preview}
             onTimeUpdate={this.durationUpdateHandler}
             loop
             muted

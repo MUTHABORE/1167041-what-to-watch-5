@@ -51,14 +51,14 @@ describe(`Should moviesData async work correctly`, () => {
 
     apiMock
       .onGet(APIRoute.FILMS)
-      .reply(200, {fake: true});
+      .reply(200, []);
 
     return filmsListFetcher(dispatch, noop, api)
         .then(() => {
           expect(dispatch).toHaveBeenCalledTimes(1);
           expect(dispatch).toHaveBeenNthCalledWith(1, {
             type: ActionType.LOAD_MOVIES,
-            payload: {fake: true},
+            payload: [],
           });
         });
   });
